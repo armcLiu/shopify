@@ -14,6 +14,7 @@ cweight = Shopicruit.weight_of? ["Computer"]
 kweight = Shopicruit.weight_of? ["Computer"]
 weight = cweight + (kweight * cnumber)
 
+puts "No duplicate combines: "
 puts "The total price is $#{price}"
 puts "The total weight is #{weight} grams"
 
@@ -24,5 +25,6 @@ price = cprice + kprice
 cweight = Shopicruit.lpweight_of? ["Computer"]
 weight = cweight + kweight
 
+puts "No duplicate variants: "
 puts "The total price is $#{price}"
 puts "The total weight is #{weight} grams"

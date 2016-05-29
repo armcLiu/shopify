@@ -26,10 +26,16 @@ class Shopicruit
     shopicruit.calculate_number
   end
 
-  def self.list_of?(query=nil)
+  def self.lprice_of?(query=nil)
     shopicruit = new(query)
     shopicruit.get_products
-    shopicruit.get_list
+    shopicruit.get_lprice
+  end
+
+  def self.lpweight_of?(query=nil)
+    shopicruit = new(query)
+    shopicruit.get_products
+    shopicruit.get_lpweight
   end
 
   def initialize(query=nil)
@@ -83,13 +89,27 @@ class Shopicruit
     total_num.round(2)
   end
 
-  def get_list
-    total_list = @products.inject(0) do |list, product|
-      list += product.variants.inject(0) do |sublist, variant|
-        sublist += variant.title.to_s + "    $" + variant.price.to_s + "    " + variant.grams.to_s + " grams\n"
+  def get_lprice
+    low_price = @products.inject(0) do |sum, product|
+      sum = product.variants.inject(0) do |prices, variant|
+        if prices == nil || prices > variant.price.to_f
+          prices = variant.price.to_f
+        end
       end
     end
-    total_list.round(2)
+    low_price.to_f
+  end
+
+  def get_lpweight
+    low_price_weight = nil
+    low_price = @products.inject(0) do |sum, product|
+      sum = product.variants.inject(0) do |prices, variant|
+        if prices == nil || prices > variant.price.to_f
+          low_price_weight = variant.grams.to_f
+        end
+      end
+    end
+    low_price_weight.to_f
   end
 
 end
